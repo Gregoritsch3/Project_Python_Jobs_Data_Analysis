@@ -141,7 +141,7 @@ Following the same methods, but using bar-plots, we find the percentages of remo
 
 As expected, the top data roles are Data Analyst, Scientist and Engineer, respectively. SQL and Python boldly dominate as the most sought-after data skills by a large margin. The countries in which IT is largely developed tend to offer the most jobs, and they include the US, India, the UK, France and Germany. It is interesting that in Croatia there is a higher demand for Data Engineers. It's also surprising that even in 2023 the percentage of remote jobs is only around 9 percent. Data Jobs that ensure Healthcare are likewise in the small minority.
 
-### 2. Skill demand
+### 2. Skill Demand
 After finding out that the top three most popular roles in the data industry are Data Analyst, Data Scientist, and Data Engineer, respectively, we look at each one individually and look for the top five skills. Similar to the previous section, we prepare the data for visualization using common Pandas methods. Since we wish to show the percentage among all job postings, we make sure to divide the count of individual skills by the total number of job postings (a number). The following code uses the Data Analyst role as an example.
 
 ```python
@@ -193,7 +193,9 @@ fig.tight_layout()
 plt.savefig('images/02_Most_Demanded_Skills_per_role.png', bbox_inches='tight')
 plt.show()
 ```
+
 Here we make use of the Seaborn ```.barplot()``` method and also utilize the ```hue='job_skills'``` parameter to grade the colors accordingly. The rest is chart formatting.
+
 ![02_Most_Demanded_Skills_per_rolel](/images/02_Most_Demanded_Skills_per_role.png)
 
 **Image 7.** _The top 5 most demanded data skills for the top 3 data roles._
@@ -316,7 +318,7 @@ The second portion of this section is to concentrate on Data Science skills and 
 
 A surprising discovery is that Senior Data Analyst roles have a lower median yearly salary than that of junior Data Scientists or Engineers. The last chart shows us that the highest paying Data Science skills tend to be the most niche ones, i.e. skills that require specialization (e.g. Asana, AirTable, Watson). We can safely conclude that these are associated with well established and higher ranked roles.
 
-### 5. Most optimal Data Science skills
+### 5. Most Optimal Data Science Skills
 In the last section we concentrate on finding the most optimal Data Science skills overall. This means identifying those that are both popular and well-paid. The process of finding the skills is relatively straight-forward and similar to our previous queries. Here we will focus on the skill categorisation part of the problem. The original DataFrame contains a job_type_skills column which inludes a string-type dictionary linking each skill to a specific data technology sector. This information is used to color-code our final scatter plot, as shown in the code below.
 
 ```python
