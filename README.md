@@ -90,6 +90,7 @@ plt.savefig('images/01_Top_10_Data_Roles.png', bbox_inches='tight')
 plt.show()
 ```
 ![01_Top_10_Data_Roles](/images/01_Top_10_Data_Roles.png)
+
 **Image 1.** _The top 10 data roles (all countries)._
 
 We then look at the top ten data roles in Croatia. This we do by filtering for Croatia-based jobs only. 
@@ -100,6 +101,7 @@ df_croatia = df[df['job_country']=="Croatia"].copy()
 What follows is manipulating the tables and plotting data using the same code as before, giving us the result shown in Image 2.
 
 ![01_Top_10_Data_Roles_Croatia](/images/01_Top_10_Data_Roles_Croatia.png)
+
 **Image 2.** _The top 10 data roles (Croatia)._
 
 To find the top ten most popular skills in the whole data industry, we reuse the same code, making sure that the ```job_skills``` column, containing a _list_ of necessary skills, is 'unpacked' through the use of the ```.explode()``` method.
@@ -118,19 +120,23 @@ plt.show()
 ```
 
 ![01_Most_Demanded_Data_Skills_Overall](/images/01_Most_Demanded_Data_Skills_Overall.png)
+
 **Image 3.** _The top 10 most demanded data skills._
 
 In a similar manner, we obtain the top countries in terms of job offerings.
 
 ![01_Top_10_Countries](/images/01_Top_10_Countries.png)
+
 **Image 4.** _The top 10 countries by count job offerings._
 
 Following the same methods, but using bar-plots, we find the percentages of remote/non-remote jobs, as well as jobs that provide healthcare.
 
 ![01_Remote_jobs_pie](/images/01_Remote_jobs_pie.png)
+
 **Image 5.** _The percentage of remote vs. non-remote jobs._
 
 ![01_Health_insurance_jobs_pie](/images/01_Health_insurance_jobs_pie.png)
+
 **Image 6.** _The percentage of healthcare-providing jobs._
 
 As expected, the top data roles are Data Analyst, Scientist and Engineer, respectively. SQL and Python boldly dominate as the most sought-after data skills by a large margin. The countries in which IT is largely developed tend to offer the most jobs, and they include the US, India, the UK, France and Germany. It is interesting that in Croatia there is a higher demand for Data Engineers. It's also surprising that even in 2023 the percentage of remote jobs is only around 9 percent. Data Jobs that ensure Healthcare are likewise in the small minority.
@@ -189,6 +195,7 @@ plt.show()
 ```
 Here we make use of the Seaborn ```.barplot()``` method and also utilize the ```hue='job_skills'``` parameter to grade the colors accordingly. The rest is chart formatting.
 ![02_Most_Demanded_Skills_per_rolel](/images/02_Most_Demanded_Skills_per_role.png)
+
 **Image 7.** _The top 5 most demanded data skills for the top 3 data roles._
 
 It's important to note that SQL and Python tend to dominate across all of the three categories. Analysts will do good to learn Excel and data visualization software such as Tableau and Power BI; Engineers can focus on cloud technologies such as AWS or Azure; Scientists should get to know statistical analysis languages and software such as R and SAS.
@@ -222,6 +229,7 @@ Displaying the first ten columns of ```df_pivot1``` provides results as shown in
 | 11                 |       332 |          6 |       144 |        56 |            2 |        31 |     5 |      3 |       9 |         5 |
 | 12                 |       221 |          3 |       118 |        34 |            0 |        39 |     8 |      7 |       8 |         4 |
 | Total              |      3915 |         65 |      2068 |       736 |           12 |       448 |   101 |     75 |      98 |       140 |
+
 **Table 1.** _Data Science skills pivot table._
 
 We then sort by the Total row and then delete it, because it no longer serves any purpose.
@@ -271,6 +279,7 @@ plt.show()
 ```
 
 ![03_Skills_Trend](/images/03_Skills_trend.png)
+
 **Image 8.** _The yearly trend of the top 5 most demanded Data Science skills._
 
 We find that all of the skills tend to stay relatively stable throughout the whole yearly cycle. There is a slight dip in demand in the autumn months which is followed by a general resurgence at the beginning of the year when employers are actively hiring.
@@ -296,11 +305,13 @@ plt.savefig('images/04_Salary_Top_6_Data_roles.png', bbox_inches='tight')
 plt.show()
 ```
 ![04_Salary_Top_6_Data_roles](/images/04_Salary_Top_6_Data_roles.png)
+
 **Image 9.** _Yearly salaries of top 6 data roles._
 
 The second portion of this section is to concentrate on Data Science skills and find those that are most popular (we have already done that in Section 2., but now we expand their number) and associated with the highest pay. The process used to arrive at these findings is similar to the previous instances of data manipulation and will not be repeated here.
 
 ![04_Most_Popular_and_Highest_Paying_Skills](/images/04_Most_Popular_and_Highest_Paying_Skills.png)
+
 **Image 10.** _Most popular and highest paying Data Science skills._
 
 A surprising discovery is that Senior Data Analyst roles have a lower median yearly salary than that of junior Data Scientists or Engineers. The last chart shows us that the highest paying Data Science skills tend to be the most niche ones, i.e. skills that require specialization (e.g. Asana, AirTable, Watson). We can safely conclude that these are associated with well established and higher ranked roles.
@@ -372,6 +383,7 @@ plt.savefig('images/05_Optimal_skills.png', bbox_inches='tight')
 plt.show()
 ```
 ![05_Optimal_skills](/images/05_Optimal_skills.png)
+
 **Image 11.** _Most optimal Data Science skills; they are the ones with the largest job market share and median yearly salary. That is, the uppermost ones farthest to the right._
 
 We see that, for the Data Scientist role, SQL, Python and R provide strong median yearly salaries while also being highly demanded by employers. Comparing Tableau and PowerBI (data visualization software), we see that the former is both better paid and more sought after. Machine Learning libraries such as PyTorch, TensorFlow, and ScikitLearn, as well as the data manipulation library Pandas are all very well paid, but seemingly reserved for more established Data Science positions.
