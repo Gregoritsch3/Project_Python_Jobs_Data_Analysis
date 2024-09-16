@@ -16,7 +16,7 @@ The goal of the project is to analyze the data so as to provide useful insights 
 4. **Salary Analysis**: How do the median yearly salaries compare for the top six data roles? What are a) the most popular and b) the most demanded skills for the Data Science role, specifically?
 5. **Optimal Skills**: What are the most optimal skills for the Data Scientist role? That is, which skills are in high demand, but are also well paid?
 
-<br>*Made upon the completion of Luke Barrouse's [Python course](https://www.lukebarousse.com/python). The project is helped by his material, but is not a direct or identical copy. Additionally, all data used is provided as part of his free course material.*
+*Made upon the completion of Luke Barrouse's [Python course](https://www.lukebarousse.com/python). The project is helped by his material, but is not a direct or identical copy. Additionally, all data used is provided as part of his free course material.*
 
 ## Tools, files and methods 
 
