@@ -6,15 +6,15 @@ A multi-library Python project that draws useful insights from existing job data
 
 ## Introduction
 
-As an aspiring Data Scientist/Analyst, I am naturally interested in the steps necessary to achieve my desired goal: a Data Science job from which one can make a living. Luckily, it turns out there exists an abundance of high-quality data regarding job postings from all around the world. This data is made available by the well-known [Luke Barrouse](https://www.lukebarousse.com/) through his [DataNerd](https://datanerd.tech/) web-application. The database contains job postings information such as: job title, location, work type (remote or on-site), average yearly or hourly salary, salary rate, health insurance provision, skills associated with a particular job posting, company name, and much more. This data pertains to the year 2023.
+Having at least a general idea of what the job market asks for when data roles are in question would be of great use to people aiming for those kinds of positions. Luckily, it turns out there exists an abundance of high-quality data regarding job postings from all around the world. This data is made available by the well-known [Luke Barrouse](https://www.lukebarousse.com/) through his [DataNerd](https://datanerd.tech/) web-application. The database contains job postings information such as: job title, location, work type (remote or on-site), average yearly or hourly salary, salary rate, health insurance provision, skills associated with a particular job posting, company name, and much more. This data pertains to the year 2023.
 
-Being ultimately motivated towards the Data Scientist role, this data is handled in such a way as to provide answers specifically for the Data Scientist role. The questions to be answered are the following:
+The goal of the project is to analyze the data so as to provide useful insights into the job postings in general, and particularly for the Data Scientist role. The structure of the project is as follows:
 
-1. Out of all job postings in 2023 that are related to the Data Scientist role, which are the top-paying remote opportunities?
-2. Based on these top-paying job listings, what are the skills associated with them?
-3. Which skills that pertain to the Data Scientist role are the most demanded? 
-4. Similarly to Question 2., but not based on individual job listings, but rather on the more general average yearly salary, which Data Science skills turn out to be the best-paying ones?
-5. What are the most optimal skills for the Data Scientist role? That is, which skills are in high demand, but are also well paid?
+1. **Exploratory Data Analysis**: What are the top data roles in the whole industry? What are the top ten countries as regards the number of job offers? What is the percentage of remote jobs, as well as jobs that provide healthcare? What are the top ten data roles in Croatia? Finally, what are the top ten most demanded data skills, in general?
+2. **Skills Demand**: What are the most demanded skills for the top three most popular data roles and how do they compare quantitatively?
+3. **Skills Trend**: How do the top five Data Science skills trend over the yearly cycle?
+4. **Salary Analysis**: How do the median yearly salaries compare for the top six data roles? What are a) the most popular and b) the most demanded skills for the Data Science role, specifically?
+5. **Optimal Skills**: What are the most optimal skills for the Data Scientist role? That is, which skills are in high demand, but are also well paid?
 
 <br>*Made upon the completion of Luke Barrouse's [Python course](https://www.lukebarousse.com/python). The project is helped by his material, but is not a direct or identical copy. Additionally, all data used is provided as part of his free course material.*
 
@@ -22,281 +22,371 @@ Being ultimately motivated towards the Data Scientist role, this data is handled
 
 The **tools** used in this project include:
 
-- **SQL**: The most popular programming language used for launching specified queries into the IT job market data and drawing useful conclusions.
+- **Python (Anaconda distribution)**: The well-known programming language well suited for data analysis. The Anaconda distribution comes with all of the neccessary libraries, listed below.
 
-- **PostreSQL**: The database management system chosen for this project based on its extensive use in the Data Analytics sector. 
+- **Pandas**: The go-to Python library for data loading, cleaning and manipulation.
 
-- **Visual Studio Code (VSCode)**: The most popular code editor; used not only for writing and executing SQL queries, but also for database management tasks.
+- **MatplotLib**: An excellent library used to visualize various types of data.
+
+- **Seaborn**: The more-visually-refined younger brother of MatplotLib. Allows for more versatile graph customization, as well as color coding.
+
+- **Seaborn**: The more-visually-refined younger brother of MatplotLib. Allows for more versatile graph customization, as well as color coding.
+
+- **Other libraries**: _Datasets_ library for loading data from an online server, _adjustText_ library for advanced text localisation (used on scatterplots), _ast_ library for more advanced string-to-list conversion.
+
+- **Visual Studio Code (VSCode)**: The most popular code editor; used for writing and executing Python code.
+
+- **Jupyter Notebook**: The interactive code-development environment of choice. Allows for greater work-ethic flexibility, as well as writing comments in the Markdown format.
 
 - **GitHub & Git**: The standard for version control, project collaboration and tracking.
 
-- **ChatGPT**: the well-known AI assistant. Used for final data visualization.
 
-Coincidently, the **files** uploaded to GitHub associated with this project include: 
+The **files** uploaded to GitHub associated with this project include: 
 
-- [**SQL code**](/sql_code/): five distinct queries that give insight into relevant job data related to the Data Scientist role.
+- [**Python code**](/): five distinct .ipynb files that provide answers to the questions laid out in the Introduction.
 
-- [**SQL load**](/sql_load/): three SQL files whose purpose is the creation and modification of the database and tables.
-
-- [**Results**](/sql_export/): in the form of .CSV files, they include the results associated with a particular SQL query.
-
-Additionally, the initial project data is provided in four seperate .CSV files that are not pushed to GitHub, mainly because of their relatively large size.
+- [**Visualizations (.png)**](/images/): all project data visualizations stored in one place.
 
 The **methodology** of the whole project is quite straight-forward: 
-- Use PostgreSQL to host the initial database, and VSCode as the code editor of choice.
-- Load the job postings data and create the associated tables.
-- Write SQL queries to answer the questions of interest.
-- Export the particular query results as .CSV files.
-- If possible, visualize these results using ChatGPT.
+- Use VSCode as the code editor of choice, and Jupyter Notebook as our working environment.
+- Use Python (Pandas) to import, clean and manipulate the data in order to find answers to specified questions.
+- Use MatplotLib and Seaborn to visualize our findings.
+- Additionally, use other miscellaneous libraries when necessary.
 
 ## Results and analysis
-Following the methodology laid out in the previous section, an effort was made to answer the questions pertaining to the Data Scientist role.
+Following the methodology laid out in the previous section, an effort was made to answer the questions specified in the introductory section.
 
-### 1. Top-paying jobs
-To identify the job opportunities that offer the highest yearly salary, an appropriate SQL query was made. The query draws most of the relevant data from the ```job_postings_fact``` table. The company name, however, is joined from the ```company_dim``` table on the basis of an unique ```company_id```. Through the use of the ```WHERE``` statement, jobs that aren't of a remote work type, that don't pertain to the Data Scientist role, as well as those with an undefined yearly average salary, are all filtered out. The results are ordered by the average yearly salary in a descending manner. For compactness' sake, we limit ourselves to the first 10 entries.
+### 1. Exploratory Data Analysis
+Every data analysis task starts with getting a general idea of the dataset we're working with. With that in mind we firstly import all necessary libraries and load the dataset using the ```load_dataset``` function from the _datasets_ library. After converting the datasets to a Pandas DataFrame object, we convert the ```job_posted_date``` string column to a proper ```datetime``` object. Additionally, the ```job_skills``` column, containing a list of corresponding job skills _in string format_ is converted to a real list-object using the ```.literal_eval``` method from the _ast_ library.
 
-```sql
-SELECT
-    job_id,
-    job_title_short,
-    job_country,
-    salary_year_avg,
-    job_posted_date,
-    company_dim.name AS company_name
-FROM
-   job_postings_fact
-LEFT JOIN company_dim
-    ON job_postings_fact.company_id = company_dim.company_id
-WHERE
-    job_location = 'Anywhere' AND
-    job_title_short LIKE '%Data_Scientist%' AND
-    salary_year_avg IS NOT NULL
-ORDER BY
-    salary_year_avg DESC
-LIMIT 10
+```python
+#Importing libraries
+import pandas as pd
+import matplotlib.pyplot as plt
+from datasets import load_dataset
+import ast
+
+#Importing data
+dataset = load_dataset('lukebarousse/data_jobs')
+df = dataset['train'].to_pandas()
+
+#Cleaning data
+df['job_posted_date'] = pd.to_datetime(df['job_posted_date'])
+df['job_skills'] = df['job_skills'].apply(lambda skills: ast.literal_eval(skills) if pd.notna(skills) else skills)
 ```
-Running this query, we come up with results shown in Table 1.
-|job_id |job_title_short      |job_country  |salary_year_avg|job_posted_date    |company_name       |
-|-------|---------------------|-------------|---------------|-------------------|-------------------|
-|40145  |Data Scientist       |United States|550000.0       |2023-08-16 16:05:16|Selby Jennings     |
-|1714768|Data Scientist       |United States|525000.0       |2023-09-01 19:24:02|Selby Jennings     |
-|327496 |Senior Data Scientist|United States|475000.0       |2023-01-31 16:03:46|Glocomms           |
-|627602 |Senior Data Scientist|United States|375000.0       |2023-08-30 10:06:34|Algo Capital Group |
-|1131472|Data Scientist       |United States|375000.0       |2023-07-31 14:05:21|Algo Capital Group |
-|1742633|Data Scientist       |United States|351500.0       |2023-07-12 03:07:31|Demandbase         |
-|551497 |Data Scientist       |United States|324000.0       |2023-05-26 22:04:44|Demandbase         |
-|126218 |Data Scientist       |Sudan        |320000.0       |2023-03-26 23:46:39|Teramind           |
-|488169 |Senior Data Scientist|Sudan        |315000.0       |2023-01-26 17:51:50|Life Science People|
-|1161630|Data Scientist       |United States|313000.0       |2023-08-23 22:03:48|Reddit             |
+After cleaning and importing our data, we move on to identify the top 10 most popular job positions in the data industry. For, this, we count the total number of a specific job posting using the .```value_counts()``` methd and divide it be the total number of job postings in the dataset using the ```.count()``` method. We then plot the results the 'Pandas' way', which is really MatplotLib in disguise.
+```python
+total_data_jobs = df['job_title_short'].count()
+(df['job_title_short'].value_counts().head(10)/total_data_jobs).plot(kind='barh', color="blue")
 
-***Table 1.** Query results for the first 10 top-paying job postings.*
+plt.title("Top 10 Data Roles (all countries)")
+plt.xlabel("Ratio")
+plt.ylabel("")
 
-Out of all the information contained in this table, one reasonable conclusion is that most of the remote highest paying job postings are from companies located inside the Unites States.
-### 2. Top-paying skills (based on job listings)
-Based on these top-paying job opportunities, we are to identify the skills associated with them. To do this, we can reuse the query from **1.**, but apply necessary modifications. Specifically, to include the skills that are associated with a particular job posting, we need to join the ```skills_dim``` table to the ```job_postings_fact``` table. However, this ```JOIN``` must be achieved through the intermediation of the ```skills_job_dim``` table, all based on the unique ```skill_id```. To achieve greater clarity but simultaneously not omit crucial top-paying listings, for job postings whose associated skill is equal to ```NULL```, we wish to display `'Not listed'`, as shown in the SQL code below.
-```sql
-SELECT
-    job_postings_fact.job_id,
-    job_title_short,
-    CASE
-        WHEN skills_dim.skills IS NULL THEN 'Not listed'
-        ELSE skills_dim.skills
-    END AS skills_required,
-    job_country,
-    salary_year_avg,
-    job_posted_date,
-    company_dim.name AS company_name
-FROM
-   job_postings_fact
-LEFT JOIN company_dim
-    ON job_postings_fact.company_id = company_dim.company_id
-LEFT JOIN skills_job_dim
-    ON skills_job_dim.job_id = job_postings_fact.job_id
-LEFT JOIN skills_dim
-    ON skills_job_dim.skill_id = skills_dim.skill_id
-WHERE
-    job_location = 'Anywhere' AND
-    job_title_short LIKE '%Data_Scientist%' AND
-    salary_year_avg IS NOT NULL
-ORDER BY
-    salary_year_avg DESC
-LIMIT 10
+ax = plt.gca()
+ax.invert_yaxis()
+
+plt.savefig('images/01_Top_10_Data_Roles.png', bbox_inches='tight')
+plt.show()
 ```
-The results of this query are shown in Table 2.
-|job_id |job_title_short      |skills_required|job_country  |salary_year_avg|job_posted_date    |company_name      |
-|-------|---------------------|---------------|-------------|---------------|-------------------|------------------|
-|40145  |Data Scientist       |sql            |United States|550000.0       |2023-08-16 16:05:16|Selby Jennings    |
-|40145  |Data Scientist       |python         |United States|550000.0       |2023-08-16 16:05:16|Selby Jennings    |
-|1714768|Data Scientist       |sql            |United States|525000.0       |2023-09-01 19:24:02|Selby Jennings    |
-|327496 |Senior Data Scientist|Not listed     |United States|475000.0       |2023-01-31 16:03:46|Glocomms          |
-|1131472|Data Scientist       |java           |United States|375000.0       |2023-07-31 14:05:21|Algo Capital Group|
-|1131472|Data Scientist       |python         |United States|375000.0       |2023-07-31 14:05:21|Algo Capital Group|
-|1131472|Data Scientist       |sql            |United States|375000.0       |2023-07-31 14:05:21|Algo Capital Group|
-|1131472|Data Scientist       |tableau        |United States|375000.0       |2023-07-31 14:05:21|Algo Capital Group|
-|1131472|Data Scientist       |spark          |United States|375000.0       |2023-07-31 14:05:21|Algo Capital Group|
-|1131472|Data Scientist       |cassandra      |United States|375000.0       |2023-07-31 14:05:21|Algo Capital Group|
+![01_Top_10_Data_Roles](/images/01_Top_10_Data_Roles.png)
+**Image 1.** _The top 10 data roles (all countries)._
 
-***Table 2.** Top-paying skills associated with the formerly queried top-paying job postings.*
+We then look at the top ten data roles in Croatia. This we do by filtering for Croatia-based jobs only. 
 
-Inside the top ten highest paying postings, we see SQL mentioned 3 times, followed by Python (2), with all the other skills represented only once. This already shows the importance of the knowledge of SQL and Python for Data Science positions.
-### 3. Most demanded skills
-Regarding the skills most in demand for the Data Scientist role, the structure of the associated query is not complicated. We start by calling an aggregation function ```COUNT``` by which we count all the different job opportunities defined by an unique ```job_id```. To group this job posting count by skill, an ```INNER JOIN``` must be carried out two times. This allows us to display the ```skill``` column as well. As stated earlier, we filter only for Data Scientist roles.
-
-```sql
-SELECT
-    skills_dim.skills AS skill,
-    COUNT(job_postings_fact.job_id) AS Data_Scientist_job_count
-FROM 
-    job_postings_fact
-INNER JOIN skills_job_dim ON skills_job_dim.job_id = job_postings_fact.job_id
-INNER JOIN skills_dim ON skills_dim.skill_id = skills_job_dim.skill_id
-WHERE 
-    job_postings_fact.job_title_short LIKE '%Data_Scientist%'
-GROUP BY
-    skill
-ORDER BY
-    Data_Scientist_job_count DESC
-LIMIT 10
+```python
+df_croatia = df[df['job_country']=="Croatia"].copy()
 ```
-Using this SQL query, we are able to unearth interesting results in the job market.
-|Skills (Data Science)|Demand Count|
-|---------------------|------------|
-|Python|140012|
-|SQL|97835|
-|R|72526|
-|SAS|35934|
-|Tableau|35472|
-|AWS|33779|
-|Spark|30991|
-|Azure|27227|
-|TensorFlow|24261|
-|Excel|20886|
-***Table 3.** Most in-demand skills associated with Data Science roles.*
+What follows is manipulating the tables and plotting data using the same code as before, giving us the result shown in Image 2.
 
-As is shown in Table 1., Python outperforms other skills by a large margin and is thus the most in-demand skill for Data Science. Next follows SQL, which is somewhat expected, which is then followed by R, the two likewise being separated by a large demand count. After yet another big jump in numbers, skills such as SAS, Tableau, AWS follow, all being distributed relatively similarly.
-### 4. Top-paying skills (based on salary)
-To identify the top-grossing skills related to the Data Scientist role, we need to start our SQL query by performing ```INNER JOIN```s between the relevant tables, the same way we did before. Filtering for Data Scientist roles and properly defined average yearly salaries, we perform a ```ROUND```ed aggregation function ```AVG``` of the same salaries with the goal of grouping them based on different skills. Finally, we order results by salary, highest to lowest.
-```sql
-SELECT
-    ROW_NUMBER() OVER(ORDER BY AVG(job_postings_fact.salary_year_avg) DESC) AS place,
-    skills_dim.skills AS skill,
-    ROUND(AVG(job_postings_fact.salary_year_avg),0) AS average_skill_salary
-FROM 
-    job_postings_fact
-INNER JOIN skills_job_dim ON skills_job_dim.job_id = job_postings_fact.job_id
-INNER JOIN skills_dim ON skills_dim.skill_id = skills_job_dim.skill_id
-WHERE
-    job_title_short LIKE '%Data_Scientist%' AND
-    salary_year_avg IS NOT NULL 
-GROUP BY
-    skill
-ORDER BY
-    average_skill_salary DESC
-LIMIT 100
+![01_Top_10_Data_Roles_Croatia](/images/01_Top_10_Data_Roles_Croatia.png)
+**Image 2.** _The top 10 data roles (Croatia)._
+
+To find the top ten most popular skills in the whole data industry, we reuse the same code, making sure that the ```job_skills``` column, containing a _list_ of necessary skills, is 'unpacked' through the use of the ```.explode()``` method.
+```python
+df_skills = df.explode('job_skills')
+total_skills_number = df_skills['job_skills'].count()
+(df_skills['job_skills'].value_counts()/total_skills_number).head(10).plot(kind='barh', color="green")
+plt.title("Most Demanded Data Skills")
+plt.xlabel("Ratio")
+plt.ylabel('')
+ax = plt.gca()
+ax.invert_yaxis()
+
+plt.savefig('images/01_Most_Demanded_Data_Skills_Overall.png', bbox_inches='tight')
+plt.show()
 ```
-Focusing on the first 10 entries only, we arrive at the following results.
-| Place | Skill         | Average Yearly Salary |
-|-------|---------------|----------------------|
-| 1     | Asana         | 200284               |
-| 2     | Airtable      | 189600               |
-| 3     | Redhat        | 189500               |
-| 4     | Watson        | 183460               |
-| 5     | Ringcentral   | 182500               |
-| 6     | Neo4j         | 170861               |
-| 7     | Elixir        | 170824               |
-| 8     | Lua           | 170500               | 
-| 9     | Solidity      | 166980               |
-| 10    | Ruby on Rails | 166500               |
 
-***Table 4.** Average yearly salaries for skills associated with Data Science roles.*
+![01_Most_Demanded_Data_Skills_Overall](/images/01_Most_Demanded_Data_Skills_Overall.png)
+**Image 3.** _The top 10 most demanded data skills._
 
-These results are interesting insofar as they show that skills requiring high degrees of specialization (Asana, Airtable, Redhat) also pay the most. It stands to reason that these are skills associated with specialized Data Science roles that take time to learn and fully grasp. They are not representative of entry-level jobs, but are indicative of well-established, long-term employee positions.
+In a similar manner, we obtain the top countries in terms of job offerings.
 
-### 5. Most optimal skills
-Finally, we concentrate on searching for the skills that are the most optimal. This means that they are both in high-demand and well-paying. This is arguably the most interesting part of the whole analysis.
+![01_Top_10_Countries](/images/01_Top_10_Countries.png)
+**Image 4.** _The top 10 countries by count job offerings._
 
-We start the query by defining two CTEs (Common Table Expressions), which are simply temporary result sets that will help us achieve our ultimate goal: the most optimal skills. The two CTEs return to us the top-paying and most demanded skills, respectively. They are constructed in a similar manner. After performing ```JOIN```s in between all the relevant tables, based on the unique ```job_id``` and ```skill_id```, we filter, as before, by the Data Scientist role and well-defined yearly salaries. We then perform the appropriate aggregate functions, averaging the salary and counting the open job positions, respectively. After all of this, we group results based on unique the ```skill_id```. In practice, results could be grouped by merely the ```skill``` column. However, owing to the fact that by design or mistake similar or identical skills may possess the same ```skill_id```, it is best-practice to sort in a stricter manner, that is, by the ```skill_id```.
+Following the same methods, but using bar-plots, we find the percentages of remote/non-remote jobs, as well as jobs that provide healthcare.
 
+![01_Remote_jobs_pie](/images/01_Remote_jobs_pie.png)
+**Image 5.** _The percentage of remote vs. non-remote jobs._
 
-```sql
-WITH top_paying_skills AS (
-    SELECT
-        skills_dim.skill_id AS skill_id,
-        skills_dim.skills AS skill,
-        ROUND(AVG(job_postings_fact.salary_year_avg),0) AS average_skill_salary
-    FROM 
-        job_postings_fact
-    INNER JOIN skills_job_dim ON skills_job_dim.job_id = job_postings_fact.job_id
-    INNER JOIN skills_dim ON skills_dim.skill_id = skills_job_dim.skill_id
-    WHERE
-        job_title_short LIKE '%Data_Scientist%' AND
-        salary_year_avg IS NOT NULL 
-    GROUP BY
-        skills_dim.skill_id
-), top_demanded_skills AS (
-    SELECT
-        skills_dim.skill_id AS skill_id,
-        skills_dim.skills AS skill,
-        COUNT(job_postings_fact.job_id) AS Data_Scientist_job_count
-    FROM 
-        job_postings_fact
-    INNER JOIN skills_job_dim ON skills_job_dim.job_id = job_postings_fact.job_id
-    INNER JOIN skills_dim ON skills_dim.skill_id = skills_job_dim.skill_id
-    WHERE 
-        job_postings_fact.job_title_short LIKE '%Data_Scientist%' AND
-        salary_year_avg IS NOT NULL 
-    GROUP BY
-        skills_dim.skill_id
-)
+![01_Health_insurance_jobs_pie](/images/01_Health_insurance_jobs_pie.png)
+**Image 6.** _The percentage of healthcare-providing jobs._
+
+As expected, the top data roles are Data Analyst, Scientist and Engineer, respectively. SQL and Python boldly dominate as the most sought-after data skills by a large margin. The countries in which IT is largely developed tend to offer the most jobs, and they include the US, India, the UK, France and Germany. It is interesting that in Croatia there is a higher demand for Data Engineers. It's also surprising that even in 2023 the percentage of remote jobs is only around 9 percent. Data Jobs that ensure Healthcare are likewise in the small minority.
+
+### 2. Skill demand
+After finding out that the top three most popular roles in the data industry are Data Analyst, Data Scientist, and Data Engineer, respectively, we look at each one individually and look for the top five skills. Similar to the previous section, we prepare the data for visualization using common Pandas methods. Since we wish to show the percentage among all job postings, we make sure to divide the count of individual skills by the total number of job postings (a number). The following code uses the Data Analyst role as an example.
+
+```python
+df_skills_analyst_orig = df[df['job_title_short'] == "Data Analyst"]
+df_skills_analyst = df_skills_analyst_orig.explode('job_skills')
+total_skills_analyst = df_skills_analyst_orig['job_title_short'].size
+(df_skills_analyst['job_skills'].value_counts()/total_skills_analyst).head(10).plot(kind='barh', color="green")
+plt.title("Most Demanded Skills - Data Analyst")
+plt.xlabel("Ratio")
+plt.ylabel('')
+ax = plt.gca()
+ax.invert_yaxis()
 ```
-After the definition of the two auxiliary CTEs and their ```INNER JOIN```ing, the final query can be written. We display relevant columns from the ```top_demanded_skills``` CTE, namely the ```skill```, ```average_skill_salary``` and ```skill_demand_count```. Now comes the interesting part. To find the skills that are the most optimal (high in count and salary), we define a quantity called the ```salary_demand_coefficient``` that is simply a product of the two columns ```average_skill_salary``` and ```skill_demand_count```, and serves as a measure of the optimality of the skill. The larger the value of this coefficient, the more optimal the skill. Looking at this coefficent in the context of dimensional analysis, it is a value whose unit is the dollar. It represents the total (potential) market value of a specific skill (average skill salary times the number of job positions where the skill is demanded). Thus, dividing this value by the ```SUM``` total of all the ratios combined, we are able to determine the percentage market share of this particular skill. This is by far the most interesting finding of the whole analysis. Code-wise, this value is ```ROUND```ed, ```CAST``` to a ```VARCHAR(4)``` data type and then ```CONCAT```etaned to a string percentage sign.
-```sql
-SELECT DISTINCT
-    top_demanded_skills.skill AS skill,
-    top_paying_skills.average_skill_salary AS average_skill_salary,
-    top_demanded_skills.Data_Scientist_job_count AS skill_demand_count,
-    top_paying_skills.average_skill_salary * top_demanded_skills.Data_Scientist_job_count AS salary_demand_coefficient,
-    CONCAT(CAST(ROUND(top_paying_skills.average_skill_salary * top_demanded_skills.Data_Scientist_job_count / SUM(top_paying_skills.average_skill_salary * top_demanded_skills.Data_Scientist_job_count) OVER (), 4) * 100 AS VARCHAR(4)), '%') AS monetary_market_share
-FROM 
-    top_demanded_skills
-INNER JOIN top_paying_skills ON top_paying_skills.skill_id = top_demanded_skills.skill_id
-ORDER BY 
-    salary_demand_coefficient DESC
-LIMIT 100
+After doing the same for the other two roles, we plot them all on one canvas using the _Seaborn_ library.
+
+```python
+df_skills_analyst = (df_skills_analyst['job_skills'].value_counts()/total_skills_analyst*100).head(5).reset_index(name="percentage").copy()
+df_skills_engineer = (df_skills_engineer['job_skills'].value_counts()/total_skills_engineer*100).head(5).reset_index(name="percentage").copy()
+df_skills_scientist = (df_skills_scientist['job_skills'].value_counts()/total_skills_scientist*100).head(5).reset_index(name="percentage").copy()
+
+fig, ax = plt.subplots(3, 1)  
+sns.set_theme(style='ticks')
+
+sns.barplot(data=df_skills_analyst, x='percentage', y='job_skills', ax=ax[0], hue='job_skills', palette='Greens_r') 
+sns.barplot(data=df_skills_engineer, x='percentage', y='job_skills', ax=ax[1], hue='job_skills', palette="Blues_r")
+sns.barplot(data=df_skills_scientist, x='percentage', y='job_skills', ax=ax[2], hue='job_skills', palette='Purples_r')
+
+ax[0].set_title('Data Analysts')
+ax[0].set_ylabel('')
+ax[0].set_xlabel('')
+ax[0].set_xlim(0,70)
+ax[0].set_xticks([])
+
+ax[1].set_title('Data Enginners')
+ax[1].set_ylabel('')
+ax[1].set_xlabel('')
+ax[1].set_xlim(0,70)
+ax[1].set_xticks([])
+
+ax[2].set_title('Data Scientists')
+ax[2].set_ylabel('')
+ax[2].set_xlabel('Probability of Skill Being in Job Posting')
+ax[2].set_xlim(0,70)
+ax[2].xaxis.set_major_formatter(plt.FuncFormatter(lambda x, pos: f'{x:.0f}%'))
+
+
+fig.suptitle("Most Demanded Skills for Top 3 Data Roles")
+fig.tight_layout()
+plt.savefig('images/02_Most_Demanded_Skills_per_role.png', bbox_inches='tight')
+plt.show()
 ```
-The first 10 results of this query are displayed firstly in Table 5., and then graphically on Chart 1.
+Here we make use of the Seaborn ```.barplot()``` method and also utilize the ```hue='job_skills'``` parameter to grade the colors accordingly. The rest is chart formatting.
+![02_Most_Demanded_Skills_per_rolel](/images/02_Most_Demanded_Skills_per_role.png)
+**Image 7.** _The top 5 most demanded data skills for the top 3 data roles._
 
-| skill      | average_skill_salary | skill_demand_count | salary_demand_coefficient | monetary_market_share |
-|------------|----------------------|--------------------|---------------------------|-----------------------|
-| Python     | 141976               | 5616               | 797337216                 | 14.70%                 |
-| SQL        | 142319               | 4175               | 594181825                 | 11.00%                 |
-| R          | 138714               | 3177               | 440694378                 | 8.17%                 |
-| Tableau    | 134753 | 1607               | 216548071                 | 4.02%                 |
-| Spark      | 149662               | 1291               | 193213642                 | 3.58%                 |
-| AWS        | 141748               | 1349               | 191218052                 | 3.55%                 |
-| TensorFlow | 146920               | 880                | 129289600                 | 2.40%                 |
-| PyTorch    | 149663               | 772                | 115539836                 | 2.14%                 |
-| Azure      | 135560               | 823                | 111565880                 | 2.00%                 |
-| Hadoop      | 141181               | 767                | 108285827                 | 2.01%                 |
+It's important to note that SQL and Python tend to dominate across all of the three categories. Analysts will do good to learn Excel and data visualization software such as Tableau and Power BI; Engineers can focus on cloud technologies such as AWS or Azure; Scientists should get to know statistical analysis languages and software such as R and SAS.
 
-***Table 5.** Query of top ten most optimal Data Science skills.*
+### 3. Data Science Yearly Skill Trend
+Now, we shift our attention to the Data Science role only. We wish to determine how the skill demand for this role varies throughout the yearly cycle. We start by preparing the data. First, we filter only for Data Scientist roles, generate a new column containing the month of the ```job_posted_date``` (for this we use the ```.dt.month ```method) and 'explode' the data based on the ```job_skills``` column. 
+```python
+df_scientist = df[df['job_title_short'] == 'Data Scientist'].copy()
+df_scientist ['job_posted_month'] = df_scientist['job_posted_date'].dt.month
+df_scientist_explode = df_scientist.explode('job_skills')
+```
+We then go on to make a pivot table based on the ```job_posted_month``` and ```job_skills``` columns, using ```agg='size'``` as the aggregation parameter. Additionally, we create a new ```'Total'``` row which serves as a sum aggregation of the values above.
 
-<br>
+```python
+df_pivot1 = df_scientist_explode.pivot_table(index='job_posted_month', columns='job_skills', aggfunc='size', fill_value=0)
+df_pivot1.loc['Total'] = df_pivot1.sum()
+```
+Displaying the first ten columns of ```df_pivot1``` provides results as shown in Table 1. 
+| job_posted_month   |   airflow |   airtable |   alteryx |   angular |   angular.js |   ansible |   apl |   arch |   asana |   asp.net |
+|:-------------------|----------:|-----------:|----------:|----------:|-------------:|----------:|------:|-------:|--------:|----------:|
+| 1                  |       494 |          5 |       301 |       109 |            1 |        58 |     6 |     16 |      11 |        19 |
+| 2                  |       331 |          4 |       199 |        59 |            1 |        38 |     6 |      7 |       1 |        21 |
+| 3                  |       322 |          1 |       165 |        61 |            0 |        36 |     8 |      7 |       4 |        12 |
+| 4                  |       338 |          5 |       147 |        49 |            2 |        40 |    13 |      5 |       4 |        13 |
+| 5                  |       276 |          8 |       144 |        51 |            2 |        37 |     3 |      8 |       4 |        11 |
+| 6                  |       266 |          9 |       157 |        79 |            0 |        30 |     8 |      7 |      11 |        16 |
+| 7                  |       300 |          6 |       187 |        58 |            0 |        20 |    15 |      1 |      20 |         8 |
+| 8                  |       374 |          4 |       213 |        72 |            0 |        31 |    13 |      6 |      11 |        15 |
+| 9                  |       315 |          7 |       156 |        58 |            2 |        41 |     9 |      6 |       8 |         8 |
+| 10                 |       346 |          7 |       137 |        50 |            2 |        47 |     7 |      2 |       7 |         8 |
+| 11                 |       332 |          6 |       144 |        56 |            2 |        31 |     5 |      3 |       9 |         5 |
+| 12                 |       221 |          3 |       118 |        34 |            0 |        39 |     8 |      7 |       8 |         4 |
+| Total              |      3915 |         65 |      2068 |       736 |           12 |       448 |   101 |     75 |      98 |       140 |
+**Table 1.** _Data Science skills pivot table._
 
-![Market share of skills](/assets/Skills_market_share.png)
+We then sort by the Total row and then delete it, because it no longer serves any purpose.
+```python
+#Sorting by 'Total' row and dropping that row afterwards
+df_pivot1 = df_pivot1[df_pivot1.loc['Total'].sort_values(ascending=False).index]
+df_pivot1 = df_pivot1.drop('Total')
+```
+In the hopes of calculating percentages of skills in job postings for each month, we first determine the total number of job postings in each month.
 
-***Chart 1.** Monetary market share of Data Science skills.*
+```python
+df_scientist_total_jobs_month = df_scientist.groupby('job_posted_month').size()
+```
 
-These results are quite valuable. They show that Python outperforms the Data Science skill market by a serious margin and makes up for almost 15% of its total value. In fact, owing to a such a large difference in the market share, we can say that **it is approximately twice as better to learn Python over R**. This especially applies to people who are beginning in their Data Science journey, because often only the knowledge of one of the two programming languages is required. Therefore, if you can only have one, and can't decide which one to choose - the chart is clear - pick Python!
+The last step before plotting the data is to divide the skill counts by the total number of job postings for each month. To do this, we use the Pandas ```.div()``` method. Afterwards, we reindex the DataFrame by the ```job_posted_month``` column translated into a string format using the ```.apply()``` method and ```lambda``` functions.
 
+```python
+#expressing the skill-demand trend in terms of percentages
+df_pivot1_percent = df_pivot1.div(df_scientist_total_jobs_month/100, axis=0)
+
+#reindexing the month to be in string format
+df_pivot1_percent = df_pivot1_percent.reset_index()
+df_pivot1_percent['job_posted_month'] = df_pivot1_percent['job_posted_month'].apply(lambda x: pd.to_datetime(x, format='%m').strftime('%b'))
+df_pivot1_percent = df_pivot1_percent.set_index("job_posted_month")
+```
+Now we plot the results using the Seaborn library and format the charts.
+```python
+#df_pivot1_percent.iloc[:,:5].plot(kind='line')
+df_plot = df_pivot1_percent.iloc[:,:5]
+sns.lineplot(data=df_plot, dashes=False, palette='tab10')
+sns.set_theme(style='ticks')
+sns.despine()
+
+plt.xlabel('')
+plt.ylabel('Percentage')
+ax=plt.gca()
+ax.yaxis.set_major_formatter(plt.FuncFormatter(lambda y, pos: f'{int(y)}%'))
+
+plt.legend(loc="lower right").remove()
+plt.title("Demand of Top 5 Data Science Skills over the Year")
+
+for i in range(5):
+    plt.text(11.7, df_plot.iloc[-4, i], df_plot.columns[i])
+
+plt.savefig('images/03_Skills_trend.png', bbox_inches='tight')
+plt.show()
+```
+
+![03_Skills_Trend](/images/03_Skills_trend.png)
+**Image 8.** _The yearly trend of the top 5 most demanded Data Science skills._
+
+We find that all of the skills tend to stay relatively stable throughout the whole yearly cycle. There is a slight dip in demand in the autumn months which is followed by a general resurgence at the beginning of the year when employers are actively hiring.
+### 4. Salary Analysis 
+In this section, we want to compare the median salaries for the top six data roles and visualize the findings using boxplots. We start by removing all rows that have ```NULL``` values in the ```salary_year_avg``` column. This ensures accurate data visualization later on. Moving forward, we identify the top six most popular data roles and store them into a list using the ```.value_counts()```, ```.index```, and ```.to_list()``` methods, respectively. We then filter our DataFrame for these six roles only, group based on the job_title_short and salary_year_avg columns, perform a 'median'-type aggregation and sort the values in descending order. The indices of the resultant DataFrame are put into a list called ```jobs_sorted```. This list is used when plotting to ensure a right ordering of the medians for different roles. Specifically, it is done through the ```order=jobs_sorted``` parameter in the Seaborn ```.boxplot()``` method.
+
+```python
+df = df.dropna(subset=['salary_year_avg'])
+top_6_jobs = df['job_title_short'].value_counts().index[:6].to_list()
+df_top_6 = df[df['job_title_short'].isin(top_6_jobs)]
+jobs_sorted = df_top_6.groupby('job_title_short')['salary_year_avg'].agg('median').sort_values(ascending=False).index.to_list()
+
+sns.boxplot(data=df_top_6, x='salary_year_avg', y='job_title_short', order=jobs_sorted)
+sns.set_theme(style='ticks')
+
+plt.title("Yearly Salaries of Top 6 Data Roles")
+plt.xlabel('Yearly Salary (USD)')
+plt.ylabel('')
+
+plt.gca().xaxis.set_major_formatter(lambda x, pos: f'${int(x/1000)}K')
+plt.xlim(0,600e3)
+plt.savefig('images/04_Salary_Top_6_Data_roles.png', bbox_inches='tight')
+plt.show()
+```
+![04_Salary_Top_6_Data_roles](/images/04_Salary_Top_6_Data_roles.png)
+**Image 9.** _Yearly salaries of top 6 data roles._
+
+The second portion of this section is to concentrate on Data Science skills and find those that are most popular (we have already done that in Section 2., but now we expand their number) and associated with the highest pay. The process used to arrive at these findings is similar to the previous instances of data manipulation and will not be repeated here.
+
+![04_Most_Popular_and_Highest_Paying_Skills](/images/04_Most_Popular_and_Highest_Paying_Skills.png)
+**Image 10.** _Most popular and highest paying Data Science skills._
+
+A surprising discovery is that Senior Data Analyst roles have a lower median yearly salary than that of junior Data Scientists or Engineers. The last chart shows us that the highest paying Data Science skills tend to be the most niche ones, i.e. skills that require specialization (e.g. Asana, AirTable, Watson). We can safely conclude that these are associated with well established and higher ranked roles.
+
+### 5. Most optimal Data Science skills
+In the last section we concentrate on finding the most optimal Data Science skills overall. This means identifying those that are both popular and well-paid. The process of finding the skills is relatively straight-forward and similar to our previous queries. Here we will focus on the skill categorisation part of the problem. The original DataFrame contains a job_type_skills column which inludes a string-type dictionary linking each skill to a specific data technology sector. This information is used to color-code our final scatter plot, as shown in the code below.
+
+```python
+df_technology = df['job_type_skills'].copy()
+
+# remove duplicates
+df_technology = df_technology.drop_duplicates()
+
+# remove NaN values
+df_technology = df_technology.dropna()
+
+# combine all dictionaries into one
+technology_dict = {}
+for row in df_technology:
+    row_dict = ast.literal_eval(row)  # convert string to dictionary
+    for key, value in row_dict.items():
+        if key in technology_dict:  # if key already exists in technology_dict, add value to existing value
+            technology_dict[key] += value
+        else:                       # if key does not exist in technology_dict, add key and value
+            technology_dict[key] = value
+
+# remove duplicates by converting values to set then back to list
+for key, value in technology_dict.items():
+    technology_dict[key] = list(set(value))
+
+#convert to DataFrame
+df_technology = pd.DataFrame(list(technology_dict.items()), columns=['technology','skills'])
+df_technology = df_technology.explode('skills')
+
+df_DS_skills_tech = df_DS_skills.merge(df_technology, left_on='job_skills', right_on='skills')
+df_DS_skills_tech = df_DS_skills_tech.set_index('skills')
+```
+The code above consists of cleaning the ```job_type_skills``` column of dupicates and ```NaN``` values, combining the individual dictionaries into one large dictionary, removing its duplicates and converting it to a Pandas DataFrame.
+
+Everything is then plotted on the final scatter plot. Additionally the, _adjustText_ library is used for ensuring that the different scatter labels (names of skills) do not overlap. When necessary, it also plots gray lines connecting the label to the point on the scatter plot. The rest of the code is more or less advanced chart formatting.
+
+```python
+sns.scatterplot(data=df_DS_skills_tech, x='skill_percentage', y='median_salary', hue='technology')
+sns.despine()
+sns.set_theme(style='ticks')
+
+plt.xlabel('Percent of Data Scientist Jobs')
+plt.ylabel('Median Yearly Salary')
+plt.title(f'Median Salary vs. Market Share for Top {len(df_DS_skills)} DS Skills')
+
+#Preparing texts for adjustText
+texts = []
+for i, txt in enumerate(df_DS_skills_tech.index):
+    texts.append(plt.text(df_DS_skills_tech['skill_percentage'].iloc[i], df_DS_skills_tech['median_salary'].iloc[i], txt))
+
+# Adjust text to avoid overlap
+adjust_text(texts, arrowprops=dict(arrowstyle='->', color='gray'))
+
+# Get current axes, set limits, and format axes
+ax = plt.gca()
+ax.yaxis.set_major_formatter(plt.FuncFormatter(lambda y, pos: f'${int(y/1000)}K'))  # Example formatting y-axis
+
+ax = plt.gca()
+ax.yaxis.set_major_formatter(plt.FuncFormatter(lambda y, pos: f'${int(y/1000)}K'))
+ax.xaxis.set_major_formatter(plt.FuncFormatter(lambda x, pos: f'{int(x)}%'))
+# Adjust layout and display the plot
+plt.tight_layout()
+plt.savefig('images/05_Optimal_skills.png', bbox_inches='tight')
+plt.show()
+```
+![05_Optimal_skills](/images/05_Optimal_skills.png)
+**Image 11.** _Most optimal Data Science skills; they are the ones with the largest job market share and median yearly salary. That is, the uppermost ones farthest to the right._
+
+We see that, for the Data Scientist role, SQL, Python and R provide strong median yearly salaries while also being highly demanded by employers. Comparing Tableau and PowerBI (data visualization software), we see that the former is both better paid and more sought after. Machine Learning libraries such as PyTorch, TensorFlow, and ScikitLearn, as well as the data manipulation library Pandas are all very well paid, but seemingly reserved for more established Data Science positions.
 ## Conclusion
-To end our analysis, we can state our findings in a few compact and digestible bullet-points:
+To end our analysis, we can lay out our findings in a few compact and digestible bullet-points:
 
-- Out of all the 2023 job postings related to the Data Scientist role, the majority of the high-paying ones are located in the USA, with the yearly salary of the top-paying posting coming in at the $550,000 mark.
-- The most demanded Data Science skills are: Python, SQL and R, in that order.
-- The skills associated with the highest yearly salaries are highly specialized languages used by well-established Data Scientist with large amounts of experience in their particular role. They are not representative of most Data Science roles, especially entry-level ones. Top picks include Asana, Airtable, Redhat. 
-- Even though SQL outperforms Python in the number of occurences in the top-paying postings, Python is overall the most optimal skill to learn based on pay and demand. In fact, it makes up for almost 15% of the total market value and learning it is almost twice as worthwile as R, especially when only one has to be chosen. It is followed by SQL, and then by R.  
-
+- The top 3 data roles in all countries are Data Analyst, Data Engineer and Data Scientist, respectively. In Croatia, Data Engineers take the lead, outperforming Analysts.
+- The countries with the highest number of job postings in the data industry include the US, India and the UK, among others. They are countries in which the IT industry is prosperous.
+- Only 10% of all data jobs are remote, and only 11% provide healthcare.
+- Across the top 3 data roles, Python and SQL are skills that boldly dominate with respect to their demand.
+- Data Analysts would prosper by learning Tableau or Power BI, Engineers by looking at AWS or Azure, and Scientist by getting to know R and SAS.
+- The yearly demand of Data Science skills is quite stable, with a slight peak in the first few months of the year. This is probably correlated to employers hiring.
+- Senior Data Scientists have the highest median yearly salary, and are followed by Senior Data Engineers. Interestingly, the next in line is the junior Data Scientist and Engineer role, outperforming even the Senior Data Analysts, aside from the last, namely the junior.
+- The highest paying Data Science skills are the most niche ones, i.e. those associated with specialized and well-established (Senior) Data Science roles.
+- The most optimal skills to learn for Data Scientists are by a large margin SQL and Python, which are followed by R.
 
 <br>
 <br>  
